@@ -25,6 +25,20 @@ func ErrorFatal(s string, a ...interface{}) {
 	os.Exit(1)
 }
 
+// Report is used to report an non-nil error
+func Report(err error) {
+	if err != nil {
+		Error(err.Error())
+	}
+}
+
+// ReportFatal is used to report an non-nil fatal error
+func ReportFatal(err error) {
+	if err != nil {
+		ErrorFatal(err.Error())
+	}
+}
+
 // Success is used to log success messages
 func Success(s string, a ...interface{}) {
 	logHandler(color.GreenString("Success:"), s, a...)
