@@ -2,6 +2,7 @@ package fs
 
 import (
 	"encoding/csv"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -62,13 +63,13 @@ func ReadCSV(path string) ([][]string, error) {
 }
 
 // FileExists checks if file exists
-func FileExists(path string) (bool, error) {
+func FileExists(path string) bool {
 	_, err := os.Stat(path)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return false, nil
+			return false
 		}
-		return false, err
+		log.Fatal(err)
 	}
-	return true, nil
+	return true
 }
