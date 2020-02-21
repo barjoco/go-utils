@@ -73,3 +73,8 @@ func FileExists(path string) bool {
 	}
 	return true
 }
+
+// Mkdir is used to make directories with default permissions of: rwx,rx,r
+func Mkdir(path string) error {
+	return os.Mkdir(path, 0751)
+}
