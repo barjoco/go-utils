@@ -30,7 +30,7 @@ func Write(path, data string) error {
 
 // WriteTo is used to append data to an existing file
 func WriteTo(path, data string) error {
-	f, err := os.OpenFile(path, os.O_WRONLY|os.O_APPEND, 0)
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_APPEND, 0644)
 	defer f.Close()
 	if err != nil {
 		return err
