@@ -14,7 +14,7 @@ func GetThisDir() (string, error) {
 
 // Write is used to write data to a file (and creates it if it doesn't exist)
 func Write(path, data string) error {
-	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0)
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0644)
 	defer f.Close()
 	if err != nil {
 		return err
