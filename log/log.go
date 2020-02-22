@@ -71,7 +71,7 @@ func HeaderString(s string, a ...interface{}) string {
 	for range s {
 		underline += "-"
 	}
-	return color.BlueString(s+"\n"+underline+"\n", a...)
+	return color.BlueString("=== "+s+" ==="+"\n"+underline+"\n", a...)
 }
 
 // Description is used to print descriptions for items
