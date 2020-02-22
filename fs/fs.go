@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"syscall"
 )
 
 // GetThisDir is used to get the directory of the currently running program
@@ -77,4 +78,18 @@ func FileExists(path string) bool {
 // Mkdir is used to make directories with default permissions of: rwx,rx,r
 func Mkdir(path string) error {
 	return os.Mkdir(path, 0751)
+}
+
+// IsRunning checks if a process is running by its pid
+func IsRunning(pid int) bool {
+	proc, err := os.FindProcess(pid)
+	if err != nil {
+		return false
+	}
+
+	err = proc.Signal(syscall.Signal(0))
+	if err == nil {
+		return true
+	}
+	return false
 }
