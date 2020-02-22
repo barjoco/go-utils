@@ -12,9 +12,9 @@ func GetThisDir() (string, error) {
 	return filepath.Abs(filepath.Dir(os.Args[0]))
 }
 
-// Write is used to write data to a file
+// Write is used to write data to a file (and creates it if it doesn't exist)
 func Write(path, data string) error {
-	f, err := os.OpenFile(path, os.O_WRONLY, 0)
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0)
 	defer f.Close()
 	if err != nil {
 		return err
