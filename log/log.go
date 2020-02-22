@@ -1,6 +1,7 @@
 package log
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"time"
@@ -57,4 +58,31 @@ func Warning(s string, a ...interface{}) {
 // Custom is used to log messages with a custom prefix
 func Custom(prefix string, colourFunc func(s string, a ...interface{}) string, s string, a ...interface{}) {
 	logHandler(colourFunc(prefix), s, a...)
+}
+
+// Header is used to print headers
+func Header(s string, a ...interface{}) {
+	fmt.Print(HeaderString(s, a...))
+}
+
+// HeaderString is used to return the string used to print headers
+func HeaderString(s string, a ...interface{}) string {
+	var underline string
+	for range s {
+		underline += "-"
+	}
+	return color.BlueString(s+"\n"+underline+"\n", a...)
+}
+
+// Description is used to print descriptions for items
+func Description(item, s string, a ...interface{}) {
+	fmt.Printf("  %s %s\n", color.CyanString(item+":"), color.WhiteString(fmt.Sprintf(s, a...)))
+}
+
+// Input is used to grab input via a custom prompt
+func Input(destination *string, s string, a ...interface{}) {
+	fmt.Print(color.MagentaString("  "+s+": ", a...))
+	var scanner = bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	*destination = scanner.Text()
 }
