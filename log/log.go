@@ -76,7 +76,7 @@ func HeaderString(s string, a ...interface{}) string {
 
 // Description is used to print descriptions for items
 func Description(item, s string, a ...interface{}) {
-	fmt.Printf("  %s %s\n", color.CyanString(item+":"), color.WhiteString(fmt.Sprintf(s, a...)))
+	fmt.Printf("%s %s\n", color.CyanString("- "+item+":"), color.WhiteString(fmt.Sprintf(s, a...)))
 }
 
 // Input is used to grab input via a custom prompt
