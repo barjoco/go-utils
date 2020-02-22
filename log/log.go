@@ -67,11 +67,12 @@ func Header(s string, a ...interface{}) {
 
 // HeaderString is used to return the string used to print headers
 func HeaderString(s string, a ...interface{}) string {
+	s = "=== " + s + " ==="
 	var underline string
 	for range s {
 		underline += "-"
 	}
-	return color.BlueString("=== "+s+" ==="+"\n"+underline+"\n", a...)
+	return color.BlueString(s+"\n"+underline+"\n", a...)
 }
 
 // Description is used to print descriptions for items
