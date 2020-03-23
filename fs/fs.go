@@ -93,3 +93,9 @@ func IsRunning(pid int) bool {
 	}
 	return false
 }
+
+// IsDir checks if a path is a file or directory
+func IsDir(path string) bool {
+	info, _ := os.Stat(path)
+	return info.IsDir()
+}
