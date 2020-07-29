@@ -14,7 +14,7 @@ func logHandler(prefix, s string, a ...interface{}) {
 	t := time.Now()
 	pc, fn, line, _ := runtime.Caller(1)
 	timeString := color.HiBlackString("[%02d:%02d:%02d]", t.Hour(), t.Minute(), t.Second())
-	fmt.Printf("%s[%s:%d]\n", runtime.FuncForPC(pc).Name(), fn, line)
+	color.Cyan("%s[%s:%d]\n", runtime.FuncForPC(pc).Name(), fn, line)
 	fmt.Printf("%s %s: %s\n", timeString, prefix, fmt.Sprintf(s, a...))
 }
 
