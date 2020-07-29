@@ -16,48 +16,48 @@ func logHandler(prefix, s string, a ...interface{}) {
 	_, fn, ln, _ := runtime.Caller(2)
 	fn = path.Join(path.Base(path.Dir(fn)), path.Base(fn))
 	timeString := color.HiBlackString("[%02d:%02d:%02d %s:%d]", t.Hour(), t.Minute(), t.Second(), fn, ln)
-	fmt.Printf("%s %s: %s\n", timeString, prefix, fmt.Sprintf(s, a...))
+	fmt.Printf("%s %s %s\n", timeString, prefix, fmt.Sprintf(s, a...))
 }
 
 // Error is used to log error messages
 func Error(s string, a ...interface{}) {
-	logHandler(color.RedString("Error"), s, a...)
+	logHandler(color.RedString("Error:"), s, a...)
 }
 
 // ErrorFatal is used to log error messages and exit
 func ErrorFatal(s string, a ...interface{}) {
-	logHandler(color.RedString("Error"), s, a...)
+	logHandler(color.RedString("Error:"), s, a...)
 	os.Exit(1)
 }
 
 // Report is used to report an non-nil error
 func Report(err error) {
 	if err != nil {
-		logHandler(color.RedString("Error"), err.Error())
+		logHandler(color.RedString("Error:"), err.Error())
 	}
 }
 
 // ReportFatal is used to report an non-nil fatal error
 func ReportFatal(err error) {
 	if err != nil {
-		logHandler(color.RedString("Error"), err.Error())
+		logHandler(color.RedString("Error:"), err.Error())
 		os.Exit(1)
 	}
 }
 
 // Success is used to log success messages
 func Success(s string, a ...interface{}) {
-	logHandler(color.GreenString("Success"), s, a...)
+	logHandler(color.GreenString("Success:"), s, a...)
 }
 
 // Info is used to log info messages
 func Info(s string, a ...interface{}) {
-	logHandler(color.CyanString("Info"), s, a...)
+	logHandler(color.CyanString("Info:"), s, a...)
 }
 
 // Warning is used to log warning messages
 func Warning(s string, a ...interface{}) {
-	logHandler(color.YellowString("Warning"), s, a...)
+	logHandler(color.YellowString("Warning:"), s, a...)
 }
 
 // Custom is used to log messages with a custom prefix
