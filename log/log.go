@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"path"
 	"runtime"
 	"time"
 
@@ -12,9 +13,9 @@ import (
 
 func logHandler(prefix, s string, a ...interface{}) {
 	t := time.Now()
-	timeString := color.HiBlackString("[%02d:%02d:%02d]", t.Hour(), t.Minute(), t.Second())
-	_, fn, line, _ := runtime.Caller(2)
-	color.Cyan("%s:%d", fn, line)
+	_, fn, ln, _ := runtime.Caller(2)
+	fn = path.Base(path.Dir(fn)) + path.Base(fn)
+	timeString := color.HiBlackString("[%02d:%02d:%02d %s:%d]", t.Hour(), t.Minute(), t.Second(), fn, ln)
 	fmt.Printf("%s %s: %s\n", timeString, prefix, fmt.Sprintf(s, a...))
 }
 
@@ -25,21 +26,22 @@ func Error(s string, a ...interface{}) {
 
 // ErrorFatal is used to log error messages and exit
 func ErrorFatal(s string, a ...interface{}) {
-	Error(s, a...)
+	logHandler(color.RedString("Error:"), s, a...)
 	os.Exit(1)
 }
 
 // Report is used to report an non-nil error
 func Report(err error) {
 	if err != nil {
-		Error(err.Error())
+		logHandler(color.RedString("Error:"), err.Error())
 	}
 }
 
 // ReportFatal is used to report an non-nil fatal error
 func ReportFatal(err error) {
 	if err != nil {
-		ErrorFatal(err.Error())
+		logHandler(color.RedString("Error:"), err.Error())
+		os.Exit(1)
 	}
 }
 
