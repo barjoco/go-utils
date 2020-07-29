@@ -14,7 +14,7 @@ import (
 func logHandler(prefix, s string, a ...interface{}) {
 	t := time.Now()
 	_, fn, ln, _ := runtime.Caller(2)
-	fn = path.Base(path.Dir(fn)) + path.Base(fn)
+	fn = path.Join(path.Base(path.Dir(fn)), path.Base(fn))
 	timeString := color.HiBlackString("[%02d:%02d:%02d %s:%d]", t.Hour(), t.Minute(), t.Second(), fn, ln)
 	fmt.Printf("%s %s: %s\n", timeString, prefix, fmt.Sprintf(s, a...))
 }
