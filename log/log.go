@@ -21,26 +21,26 @@ func logHandler(prefix, s string, a ...interface{}) {
 
 // Error is used to log error messages
 func Error(s string, a ...interface{}) {
-	logHandler(color.RedString("Error:"), s, a...)
+	logHandler(color.RedString("Error"), s, a...)
 }
 
 // ErrorFatal is used to log error messages and exit
 func ErrorFatal(s string, a ...interface{}) {
-	logHandler(color.RedString("Error:"), s, a...)
+	logHandler(color.RedString("Error"), s, a...)
 	os.Exit(1)
 }
 
 // Report is used to report an non-nil error
 func Report(err error) {
 	if err != nil {
-		logHandler(color.RedString("Error:"), err.Error())
+		logHandler(color.RedString("Error"), err.Error())
 	}
 }
 
 // ReportFatal is used to report an non-nil fatal error
 func ReportFatal(err error) {
 	if err != nil {
-		logHandler(color.RedString("Error:"), err.Error())
+		logHandler(color.RedString("Error"), err.Error())
 		os.Exit(1)
 	}
 }
