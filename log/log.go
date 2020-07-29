@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"runtime"
 	"time"
 
 	"github.com/fatih/color"
@@ -11,8 +12,10 @@ import (
 
 func logHandler(prefix, s string, a ...interface{}) {
 	t := time.Now()
+	pc, fn, ln, _ := runtime.Caller(1)
 	timeString := color.HiBlackString("[%02d:%02d:%02d]", t.Hour(), t.Minute(), t.Second())
-	fmt.Printf("%s %s %s\n", timeString, prefix, fmt.Sprintf(s, a...))
+	color.Cyan("%s[%s:%s]", pc, fn, ln)
+	fmt.Printf("%s %s: %s\n", timeString, prefix, fmt.Sprintf(s, a...))
 }
 
 // Error is used to log error messages
@@ -42,17 +45,17 @@ func ReportFatal(err error) {
 
 // Success is used to log success messages
 func Success(s string, a ...interface{}) {
-	logHandler(color.GreenString("Success:"), s, a...)
+	logHandler(color.GreenString("Success"), s, a...)
 }
 
 // Info is used to log info messages
 func Info(s string, a ...interface{}) {
-	logHandler(color.CyanString("Info:"), s, a...)
+	logHandler(color.CyanString("Info"), s, a...)
 }
 
 // Warning is used to log warning messages
 func Warning(s string, a ...interface{}) {
-	logHandler(color.YellowString("Warning:"), s, a...)
+	logHandler(color.YellowString("Warning"), s, a...)
 }
 
 // Custom is used to log messages with a custom prefix
