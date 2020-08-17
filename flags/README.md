@@ -24,9 +24,9 @@ Switches must not expect any values, and are always processed at the end of the 
 
 Use `flags.Set` to set flags. The function expects an array of flag aliases, the number of values it expects, and a function which is executed when the flag is met.
 
-The function provides an array of values supplied to the flag.
+The function provides an array containing the values supplied to the flag.
 
-Once all flags are set, call `flags.Parse`, giving to it an array of arguments to parse.
+Once all flags are set, call `flags.Parse`, giving it an array of arguments to parse.
 
 ```go
 // Has one alias, --name, and expects one value
