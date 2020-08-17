@@ -22,9 +22,6 @@ var funcCounter = 0
 // Example: Set([]string{"i", "input"}, -1, func(vals []string){ fmt.Println("Input files:", vals) })
 func Set(names []string, values int, action func([]string)) {
 	for _, name := range names {
-		if _, ok := flagMap[name]; ok {
-			log.ErrorFatal("Flag `%s` has already been set", name)
-		}
 		flagMap[name] = []int{values, funcCounter}
 	}
 	if values < -1 {
@@ -49,7 +46,7 @@ func Parse(args []string) {
 	for i := 0; i < len(flags); i++ {
 		flag = strings.TrimSpace(flags[i])
 
-		// Ignore empty elements and re-prepend flags with `-` or `--`
+		// Remove empty elements and re-prepend flags with `-` or `--`
 		if flag == "" {
 			flags[i+1] = "-" + flags[i+1]
 			continue
@@ -57,7 +54,7 @@ func Parse(args []string) {
 		flag = "-" + flag
 
 		// Add switch collections as indivdual switches to the flags array
-		if flag[:2] != "--" && len(strings.Fields(flag)[0]) > 2 {
+		if flag[:2] != "--" && len(flag) > 2 && len(strings.Fields(flag)) == 1 {
 			flags = append(flags, strings.Split(flag[1:], "")...)
 			continue
 		}
@@ -77,7 +74,7 @@ func Parse(args []string) {
 			// Execute function associated with this flag
 			funcMap[flagData[1]](flagGroup[1:])
 		} else {
-			color.Red("Unrecognised flag: `%s`", flagName)
+			color.Red("Unrecognised flag: %s", flagName)
 			os.Exit(1)
 		}
 	}

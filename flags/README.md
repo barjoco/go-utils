@@ -16,9 +16,9 @@ Use `-1` to uncap the number of values to be expected.
 
 ### Switches
 
-A flags can have switches, indivually or as a collection. For example, `-l -r -s -a` or `-lrsa`
+Switches can be provided, indivually or as a collection. For example, `-l -r -s -a` or `-lrsa`
 
-Switches must not expect any values, and are always processed at the end of the arguments list (but can appear anywhere).
+Switches within a switch collection won't recieve any values, and are always processed at the end of the arguments list (but can appear anywhere).
 
 ## Quick start
 
@@ -52,3 +52,9 @@ Outputs:
 Hello, John
 Bye!
 ```
+
+## Syntactic notes
+
+Switch collections are syntactic sugar for single-letter flags, allowing groups of them to take up less space.
+
+Flags are executed in the order they appear on the command line, except for switch collections, which are executed after all other flags, in the order they appear in the collection.
