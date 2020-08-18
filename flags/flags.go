@@ -8,11 +8,13 @@ import (
 	"github.com/fatih/color"
 )
 
+// flagGroups stores an array of flag groups, that is the flag name + the values supplied to it
 // flagMap stores data about a flag; how many values it expects, and the id of the function it associated with
-// funcMap stores a map of functions, where the key is a number the flags can associate with in the flagMap
+// funcMap stores a map of functions, where the key is a number the flagGroups can associate with in the flagMap
 // funcCounter counts the number of functions that have been registered
+var flagGroups []string
 var flagMap = map[string][]int{}
-var funcMap = map[int]func([]string){}
+var funcMap = map[int]func([]string){0: func([]string) {}}
 var funcCounter = 0
 
 // Set a flag's action
@@ -38,7 +40,7 @@ func Set(names []string, values int, action func([]string)) {
 func Parse(args []string) {
 	// Separate argument list into groups of flag + values
 	argString := strings.Join(args, " ")
-	flags := strings.Split(argString, "-")[1:]
+	flagGroups = strings.Split(argString, "-")[1:]
 
 	var flagGroup []string
 	var flagName string
@@ -46,19 +48,19 @@ func Parse(args []string) {
 	var numVals int
 
 	var flag string
-	for i := 0; i < len(flags); i++ {
-		flag = strings.TrimSpace(flags[i])
+	for i := 0; i < len(flagGroups); i++ {
+		flag = strings.TrimSpace(flagGroups[i])
 
 		// Ignore empty elements and re-prepend flags with `-` or `--`
 		if flag == "" {
-			flags[i+1] = "-" + flags[i+1]
+			flagGroups[i+1] = "-" + flagGroups[i+1]
 			continue
 		}
 		flag = "-" + flag
 
 		// Add switch collections as indivdual switches to the flags array
 		if flag[:2] != "--" && len(strings.Fields(flag)[0]) > 2 {
-			flags = append(flags, strings.Split(flag[1:], "")...)
+			flagGroups = append(flagGroups, strings.Split(flag[1:], "")...)
 			continue
 		}
 
