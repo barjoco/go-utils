@@ -9,7 +9,7 @@ import (
 )
 
 // flagGroups stores an array of flag groups, that is the flag name + the values supplied to it
-// flagMap stores data about a flag; how many values it expects, and the id of the function it associated with
+// flagMap stores data about a flag; how many values it expects and the id of the function it is associated with
 // funcMap stores a map of functions, where the key is a number the flagGroups can associate with in the flagMap
 // funcCounter counts the number of functions that have been registered
 var flagGroups []string
@@ -20,7 +20,7 @@ var funcCounter = 0
 // Set a flag's action
 // `names` are the optional names for the flag
 // `values` is the number of values the flag is expecting. Use -1 if expecting a variable number of values
-// `action` is the executed when the flag is parsed. Action provides the number of values supplied to the flag as an argument
+// `action` is the executed when the flag is parsed. Action provides the values supplied to the flag as an argument
 // Example: Set([]string{"i", "input"}, -1, func(vals []string){ fmt.Println("Input files:", vals) })
 func Set(names []string, values int, action func([]string)) {
 	for _, name := range names {
@@ -30,7 +30,7 @@ func Set(names []string, values int, action func([]string)) {
 		flagMap[name] = []int{values, funcCounter}
 	}
 	if values < -1 {
-		log.ErrorFatal("Invalid number for expected values (must be -1 <= x)")
+		log.ErrorFatal("Invalid number for expected values (must be -1 <= x < ∞)")
 	}
 	funcMap[funcCounter] = action
 	funcCounter++
