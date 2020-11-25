@@ -9,3 +9,8 @@ func Contains(haystack []string, needle string) bool {
 	}
 	return false
 }
+
+// Prepend ...
+func Prepend(array []string, items ...string) []string {
+	return append(items, array...)
+}
