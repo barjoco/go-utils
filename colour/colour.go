@@ -2,17 +2,14 @@ package colour
 
 import (
 	"errors"
-	"image/color"
 )
 
 var errInvalidFormat = errors.New("invalid format")
 
 // HexToRGB ...
-func HexToRGB(s string) (c color.RGBA, err error) {
-	c.A = 0xff
-
+func HexToRGB(s string) (r, g, b int) {
 	if s[0] != '#' {
-		return c, errInvalidFormat
+		panic(errInvalidFormat)
 	}
 
 	hexToByte := func(b byte) byte {
@@ -24,21 +21,22 @@ func HexToRGB(s string) (c color.RGBA, err error) {
 		case b >= 'A' && b <= 'F':
 			return b - 'A' + 10
 		}
-		err = errInvalidFormat
-		return 0
+		panic(errInvalidFormat)
+
 	}
 
 	switch len(s) {
 	case 7:
-		c.R = hexToByte(s[1])<<4 + hexToByte(s[2])
-		c.G = hexToByte(s[3])<<4 + hexToByte(s[4])
-		c.B = hexToByte(s[5])<<4 + hexToByte(s[6])
+		r = int(hexToByte(s[1])<<4 + hexToByte(s[2]))
+		g = int(hexToByte(s[3])<<4 + hexToByte(s[4]))
+		b = int(hexToByte(s[5])<<4 + hexToByte(s[6]))
 	case 4:
-		c.R = hexToByte(s[1]) * 17
-		c.G = hexToByte(s[2]) * 17
-		c.B = hexToByte(s[3]) * 17
+		r = int(hexToByte(s[1]) * 17)
+		g = int(hexToByte(s[2]) * 17)
+		b = int(hexToByte(s[3]) * 17)
 	default:
-		err = errInvalidFormat
+		panic(errInvalidFormat)
 	}
+
 	return
 }
