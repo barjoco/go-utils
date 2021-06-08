@@ -7,6 +7,6 @@ for f in base64/*.base64; do
     gofile='package inter'
     gofile+='\n\n'
     gofile+="// $fontName is a base64 encoding of the font\n"
-    gofile+='var '$fontName' = `'$(base64 $f)'`'
+    gofile+='var '$fontName' = `'$(cat $f)'`'
     echo -e $gofile >"$fontName.go"
 done

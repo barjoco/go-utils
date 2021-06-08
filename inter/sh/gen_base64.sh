@@ -1,5 +1,5 @@
 #!/bin/sh
 
 for f in ttf/*.ttf; do
-    base64 $f > "base64/$(basename $f).base64";
+    base64 $f | tr -d '\n' > "base64/$(basename $f).base64";
 done

@@ -4,7 +4,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/barjoco/utils/log"
+	"github.com/barjoio/utils/log"
 	"github.com/fatih/color"
 )
 
